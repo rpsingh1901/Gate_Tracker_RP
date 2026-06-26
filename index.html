@@ -887,10 +887,31 @@ window.toggle = toggle;
 window.toggleSection = toggleSection;
 window.resetAll = resetAll;
 // ── Init ──
-(async () => {
-  await loadState();
-  render();
-})();
+// ── Init ──
+onAuthStateChanged(auth, async (user) => {
+
+    currentUser = user;
+
+    if (user) {
+
+        await loadState();
+        render();
+
+        document.getElementById(
+            "loginCard"
+        ).style.display = "none";
+
+    } else {
+
+        state = {};
+        render();
+
+        document.getElementById(
+            "loginCard"
+        ).style.display = "block";
+
+    }
+});
   
 async function loginWithGoogle() {
 
@@ -901,16 +922,20 @@ async function loginWithGoogle() {
             provider
         );
 
-        currentUser = result.user;
+    currentUser = result.user;
 
-        await loadState();
+    await loadState();
 
-        render();
+    render();
 
-        alert(
-            "Logged in as: " +
-            currentUser.email
-        );
+    document.getElementById(
+        "loginCard"
+    ).style.display = "none";
+
+    alert(
+        "Logged in as: " +
+        currentUser.email
+    );
 
     }
     catch(err) {
