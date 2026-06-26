@@ -423,12 +423,76 @@
     .section-name { font-size: 0.85rem; }
     td:not(:first-child) { padding: 6px 4px; }
   }
+  .login-card{
+    max-width:500px;
+    margin:20px auto;
+    padding:25px;
+    background:#ffffff;
+    border-radius:16px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.1);
+    text-align:center;
+}
+
+.login-card h2{
+    margin-bottom:12px;
+    color:#1f2937;
+}
+
+.login-card p{
+    color:#555;
+    margin-bottom:15px;
+}
+
+.warning{
+    background:#fff3cd;
+    color:#856404;
+    padding:12px;
+    border-radius:8px;
+    margin-bottom:18px;
+    font-size:14px;
+}
+
+.google-btn{
+    background:#4285F4;
+    color:white;
+    border:none;
+    padding:14px 24px;
+    border-radius:10px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.google-btn:hover{
+    transform:translateY(-2px);
+    opacity:0.9;
+}
 </style>
 </head>
 <body>
-<button id="googleLoginBtn">
-    Sign in with Google
-</button>
+<div id="loginCard" class="login-card">
+
+    <h2>🔒 Cloud Sync</h2>
+
+    <p>
+        Your GATE preparation progress is
+        stored securely in the cloud.
+    </p>
+
+    <div class="warning">
+        ⚠ Progress will not be saved
+        until you sign in.
+    </div>
+
+    <button id="googleLoginBtn" class="google-btn">
+
+        <span>🔵</span>
+        Continue with Google
+
+    </button>
+
+</div>
 <div class="container">
   <header>
     <div class="header-top">
