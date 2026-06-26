@@ -484,6 +484,15 @@ import {
 } from
 "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
+  signOut
+} from
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyAclJH1MsaImJClPURkvLlnhng5h-ucDIY",
   authDomain: "gate-tracker-rp.firebaseapp.com",
@@ -496,6 +505,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
 const COLS = ['clg', 'me', 'qp', 'pyq'];
 const COL_LABELS = ['cmplt(~clg)', 'cmplt(~me)', 'QuesPrac', 'PYQs'];
