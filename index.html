@@ -426,7 +426,9 @@
 </style>
 </head>
 <body>
-
+<button id="googleLoginBtn">
+    Sign in with Google
+</button>
 <div class="container">
   <header>
     <div class="header-top">
@@ -795,6 +797,40 @@ window.resetAll = resetAll;
   await loadState();
   render();
 })();
+  async function loginWithGoogle() {
+
+    try {
+
+        const result = await signInWithPopup(
+            auth,
+            provider
+        );
+
+        console.log(
+            "Logged in:",
+            result.user.email
+        );
+
+        alert(
+            "Logged in as: " +
+            result.user.email
+        );
+
+    }
+    catch(err) {
+
+        console.error(err);
+        alert(err.message);
+
+    }
+}
+
+document
+    .getElementById("googleLoginBtn")
+    .addEventListener(
+        "click",
+        loginWithGoogle
+    );
 </script>
 </body>
 </html>
