@@ -509,7 +509,7 @@ const db = getFirestore(app);
 
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
-
+let currentUser = null;
 const COLS = ['clg', 'me', 'qp', 'pyq'];
 const COL_LABELS = ['cmplt(~clg)', 'cmplt(~me)', 'QuesPrac', 'PYQs'];
 const COL_CLASSES = ['checked-clg', 'checked-me', 'checked-qp', 'checked-pyq'];
@@ -610,9 +610,22 @@ const SECTIONS = [
 let state = {};
 
 async function loadState() {
+
   try {
+
+    if (!currentUser) {
+      state = {};
+      return;
+    }
+
     const snap = await getDoc(
-      doc(db, "tracker", "gate_progress")
+      doc(
+        db,
+        "users",
+        currentUser.uid,
+        "progress",
+        "gate"
+      )
     );
 
     if (snap.exists()) {
@@ -620,21 +633,38 @@ async function loadState() {
     } else {
       state = {};
     }
+
   } catch(e) {
+
     console.error(e);
     state = {};
+
   }
 }
 
 async function saveState() {
+
   try {
+
+    if (!currentUser) return;
+
     await setDoc(
-      doc(db, "tracker", "gate_progress"),
+      doc(
+        db,
+        "users",
+        currentUser.uid,
+        "progress",
+        "gate"
+      ),
       state
     );
+
     showToast();
+
   } catch(e) {
+
     console.error(e);
+
   }
 }
 
@@ -797,7 +827,8 @@ window.resetAll = resetAll;
   await loadState();
   render();
 })();
-  async function loginWithGoogle() {
+  
+async function loginWithGoogle() {
 
     try {
 
@@ -806,14 +837,15 @@ window.resetAll = resetAll;
             provider
         );
 
-        console.log(
-            "Logged in:",
-            result.user.email
-        );
+        currentUser = result.user;
+
+        await loadState();
+
+        render();
 
         alert(
             "Logged in as: " +
-            result.user.email
+            currentUser.email
         );
 
     }
