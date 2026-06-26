@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GATE CS 2027 — Syllabus Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0e14;
+    --surface: #13141d;
+    --surface2: #1a1c28;
+    --border: #2a2d40;
+    --accent: #7c3aed;
+    --accent2: #a855f7;
+    --accent-glow: rgba(124,58,237,0.25);
+    --green: #22c55e;
+    --green-dim: rgba(34,197,94,0.12);
+    --yellow: #f59e0b;
+    --yellow-dim: rgba(245,158,11,0.12);
+    --blue: #3b82f6;
+    --blue-dim: rgba(59,130,246,0.12);
+    --pink: #ec4899;
+    --pink-dim: rgba(236,72,153,0.12);
+    --text: #e2e4f0;
+    --text-dim: #6b7280;
+    --text-muted: #9ca3af;
+    --radius: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Ambient background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -30%;
+    left: -20%;
+    width: 70%;
+    height: 70%;
+    background: radial-gradient(ellipse, rgba(124,58,237,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -20%;
+    right: -10%;
+    width: 50%;
+    height: 60%;
+    background: radial-gradient(ellipse, rgba(168,85,247,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── Header ── */
+  header {
+    padding: 40px 0 30px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .header-left h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    background: linear-gradient(135deg, #e2e4f0, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header-left p {
+    color: var(--text-dim);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    margin-top: 8px;
+    letter-spacing: 0.05em;
+  }
+
+  /* Progress overview */
+  .progress-cards {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+
+  .prog-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 18px;
+    min-width: 130px;
+    transition: border-color 0.2s;
+  }
+  .prog-card:hover { border-color: var(--accent); }
+
+  .prog-card .label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  .prog-card .value {
+    font-size: 1.4rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .prog-card .bar {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-top: 8px;
+    overflow: hidden;
+  }
+  .prog-card .bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.5s ease;
+  }
+  .prog-card.clg .value { color: var(--green); }
+  .prog-card.clg .bar-fill { background: var(--green); }
+  .prog-card.me .value { color: var(--blue); }
+  .prog-card.me .bar-fill { background: var(--blue); }
+  .prog-card.qp .value { color: var(--yellow); }
+  .prog-card.qp .bar-fill { background: var(--yellow); }
+  .prog-card.pyq .value { color: var(--pink); }
+  .prog-card.pyq .bar-fill { background: var(--pink); }
+
+  /* ── Column Legend ── */
+  .legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    padding: 14px 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── Sections ── */
+  .section-block {
+    margin-bottom: 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .section-block:hover { border-color: rgba(124,58,237,0.4); }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    background: var(--surface2);
+    cursor: pointer;
+    user-select: none;
+    gap: 12px;
+  }
+
+  .section-header:hover { background: #1e2030; }
+
+  .section-title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .section-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent2);
+    background: rgba(124,58,237,0.15);
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    border: 1px solid rgba(124,58,237,0.3);
+  }
+
+  .section-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .section-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .section-progress {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+  }
+
+  .chevron {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    transition: transform 0.25s;
+  }
+  .section-block.open .chevron { transform: rotate(180deg); }
+
+  /* Table */
+  .section-body {
+    display: none;
+  }
+  .section-block.open .section-body {
+    display: block;
+  }
+
+  .topic-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .table-header-row {
+    background: #0f1019;
+  }
+  .table-header-row th {
+    padding: 10px 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 400;
+    border-bottom: 1px solid var(--border);
+  }
+  .table-header-row th:first-child {
+    text-align: left;
+    color: var(--text-dim);
+  }
+  .table-header-row th.col-clg { color: var(--green); }
+  .table-header-row th.col-me { color: var(--blue); }
+  .table-header-row th.col-qp { color: var(--yellow); }
+  .table-header-row th.col-pyq { color: var(--pink); }
+  .table-header-row th:not(:first-child) { text-align: center; width: 110px; }
+
+  .topic-row {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .topic-row:last-child { border-bottom: none; }
+  .topic-row:hover { background: rgba(124,58,237,0.04); }
+
+  .topic-row.all-done {
+    background: rgba(34,197,94,0.04);
+  }
+
+  .topic-name-cell {
+    padding: 12px 14px;
+    font-size: 0.88rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .topic-idx {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    min-width: 20px;
+  }
+
+  td { vertical-align: middle; }
+  td:not(:first-child) { text-align: center; padding: 8px; }
+
+  /* Checkboxes */
+  .check-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.15s ease;
+    color: var(--text-dim);
+    outline: none;
+    position: relative;
+  }
+
+  .check-btn:hover {
+    transform: scale(1.1);
+  }
+
+  .check-btn.checked-clg {
+    background: var(--green-dim);
+    border-color: var(--green);
+    color: var(--green);
+  }
+  .check-btn.checked-me {
+    background: var(--blue-dim);
+    border-color: var(--blue);
+    color: var(--blue);
+  }
+  .check-btn.checked-qp {
+    background: var(--yellow-dim);
+    border-color: var(--yellow);
+    color: var(--yellow);
+  }
+  .check-btn.checked-pyq {
+    background: var(--pink-dim);
+    border-color: var(--pink);
+    color: var(--pink);
+  }
+
+  .check-btn:not([class*="checked"]):hover {
+    border-color: var(--accent);
+    background: var(--accent-glow);
+  }
+
+  /* Pop animation */
+  @keyframes pop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+  }
+  .check-btn.pop { animation: pop 0.2s ease; }
+
+  /* Reset button */
+  .reset-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+  .reset-btn:hover {
+    border-color: #ef4444;
+    color: #ef4444;
+  }
+
+  /* Saved toast */
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--surface2);
+    border: 1px solid var(--green);
+    color: var(--green);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    padding: 10px 16px;
+    border-radius: 8px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.25s ease;
+    pointer-events: none;
+    z-index: 999;
+    letter-spacing: 0.05em;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+  @media (max-width: 640px) {
+    .table-header-row th:not(:first-child) { width: 70px; }
+    .check-btn { width: 30px; height: 30px; font-size: 0.85rem; }
+    .section-name { font-size: 0.85rem; }
+    td:not(:first-child) { padding: 6px 4px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="header-top">
+      <div class="header-left">
+        <h1>GATE CS 2026<br>Syllabus Tracker</h1>
+        <p>IIT GUWAHATI &nbsp;·&nbsp; 10 SECTIONS &nbsp;·&nbsp; Progress auto-saved</p>
+      </div>
+      <button class="reset-btn" onclick="resetAll()">⚠ Reset All</button>
+    </div>
+    <div class="progress-cards">
+      <div class="prog-card clg">
+        <div class="label">cmplt(~clg)</div>
+        <div class="value" id="val-clg">0%</div>
+        <div class="bar"><div class="bar-fill" id="bar-clg" style="width:0%"></div></div>
+      </div>
+      <div class="prog-card me">
+        <div class="label">cmplt(~me)</div>
+        <div class="value" id="val-me">0%</div>
+        <div class="bar"><div class="bar-fill" id="bar-me" style="width:0%"></div></div>
+      </div>
+      <div class="prog-card qp">
+        <div class="label">QuesPrac</div>
+        <div class="value" id="val-qp">0%</div>
+        <div class="bar"><div class="bar-fill" id="bar-qp" style="width:0%"></div></div>
+      </div>
+      <div class="prog-card pyq">
+        <div class="label">PYQs</div>
+        <div class="value" id="val-pyq">0%</div>
+        <div class="bar"><div class="bar-fill" id="bar-pyq" style="width:0%"></div></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>cmplt(~clg) — Completed via college/coaching</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>cmplt(~me) — Self-studied & understood</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--yellow)"></div>QuesPrac — Practice questions done</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--pink)"></div>PYQs — Previous year questions done</div>
+  </div>
+
+  <div id="sections-container"></div>
+</div>
+
+<div class="toast" id="toast">✓ Progress saved</div>
+
+<script type = "module">
+  import { initializeApp } from
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc
+} from
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAclJH1MsaImJClPURkvLlnhng5h-ucDIY",
+  authDomain: "gate-tracker-rp.firebaseapp.com",
+  projectId: "gate-tracker-rp",
+  storageBucket: "gate-tracker-rp.firebasestorage.app",
+  messagingSenderId: "707741952732",
+  appId: "1:707741952732:web:cb12433c81ce022f446219"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
+const COLS = ['clg', 'me', 'qp', 'pyq'];
+const COL_LABELS = ['cmplt(~clg)', 'cmplt(~me)', 'QuesPrac', 'PYQs'];
+const COL_CLASSES = ['checked-clg', 'checked-me', 'checked-qp', 'checked-pyq'];
+const COL_ICONS = ['✓', '✓', '✓', '✓'];
+
+const SECTIONS = [
+  { id: 's1', num: 'SEC 01', name: 'Engineering Mathematics', topics: [
+    'Propositional and first order logic',
+    'Sets, relations, functions, partial orders and lattices',
+    'Monoids, Groups',
+    'Graphs: connectivity, matching, colouring',
+    'Combinatorics: counting, recurrence relations, generating functions',
+    'Matrices, determinants, system of linear equations',
+    'Eigenvalues and eigenvectors, LU decomposition',
+    'Limits, continuity and differentiability',
+    'Maxima and minima, Mean value theorem, Integration',
+    'Random variables & distributions (Uniform, Normal, Exponential, Poisson, Binomial)',
+    'Mean, median, mode and standard deviation',
+    'Conditional probability and Bayes theorem',
+  ]},
+  { id: 's2', num: 'SEC 02', name: 'Digital Logic', topics: [
+    'Boolean algebra',
+    'Combinational and sequential circuits',
+    'Minimization',
+    'Number representations and computer arithmetic (fixed and floating point)',
+  ]},
+  { id: 's3', num: 'SEC 03', name: 'Computer Organization and Architecture', topics: [
+    'Machine instructions and addressing modes',
+    'ALU, data-path and control unit',
+    'Instruction pipelining, pipeline hazards',
+    'Memory hierarchy: cache, main memory and secondary storage',
+    'I/O interface: interrupt and DMA mode',
+  ]},
+  { id: 's4', num: 'SEC 04', name: 'Programming and Data Structures', topics: [
+    'Programming in C',
+    'Recursion',
+    'Arrays, stacks, queues, linked lists',
+    'Trees, binary search trees, binary heaps',
+    'Graphs',
+  ]},
+  { id: 's5', num: 'SEC 05', name: 'Algorithms', topics: [
+    'Searching, sorting, hashing',
+    'Asymptotic worst case time and space complexity',
+    'Greedy algorithm design',
+    'Dynamic programming',
+    'Divide-and-conquer',
+    'Graph traversals',
+    'Minimum spanning trees',
+    'Shortest paths',
+  ]},
+  { id: 's6', num: 'SEC 06', name: 'Theory of Computation', topics: [
+    'Regular expressions and finite automata',
+    'Context-free grammars and push-down automata',
+    'Regular and context-free languages, pumping lemma',
+    'Turing machines and undecidability',
+  ]},
+  { id: 's7', num: 'SEC 07', name: 'Compiler Design', topics: [
+    'Lexical analysis',
+    'Parsing',
+    'Syntax-directed translation',
+    'Runtime environments',
+    'Intermediate code generation',
+    'Local optimization',
+    'Data flow analyses: constant propagation',
+    'Liveness analysis',
+    'Common subexpression elimination',
+  ]},
+  { id: 's8', num: 'SEC 08', name: 'Operating System', topics: [
+    'System calls, processes, threads',
+    'Inter-process communication',
+    'Concurrency and synchronization',
+    'Deadlock',
+    'CPU and I/O scheduling',
+    'Memory management and virtual memory',
+    'File systems',
+  ]},
+  { id: 's9', num: 'SEC 09', name: 'Databases', topics: [
+    'ER-model',
+    'Relational algebra and tuple calculus',
+    'SQL',
+    'Integrity constraints, normal forms',
+    'File organization, indexing (B and B+ trees)',
+    'Transactions and concurrency control',
+  ]},
+  { id: 's10', num: 'SEC 10', name: 'Computer Networks', topics: [
+    'OSI and TCP/IP protocol stacks',
+    'Packet, circuit and virtual circuit switching',
+    'Data link layer: framing, error detection, MAC, Ethernet bridging',
+    'Routing protocols: shortest path, flooding, distance vector, link state',
+    'IP addressing, IPv4, CIDR notation',
+    'IP support protocols: ARP, DHCP, ICMP, NAT',
+    'Transport layer: flow control, congestion control, UDP, TCP, sockets',
+    'Application layer protocols: DNS, SMTP, HTTP, FTP, Email',
+  ]},
+];
+
+// ── State ──
+let state = {};
+
+async function loadState() {
+  try {
+    const snap = await getDoc(
+      doc(db, "tracker", "gate_progress")
+    );
+
+    if (snap.exists()) {
+      state = snap.data();
+    } else {
+      state = {};
+    }
+  } catch(e) {
+    console.error(e);
+    state = {};
+  }
+}
+
+async function saveState() {
+  try {
+    await setDoc(
+      doc(db, "tracker", "gate_progress"),
+      state
+    );
+    showToast();
+  } catch(e) {
+    console.error(e);
+  }
+}
+
+function getKey(sectionId, topicIdx, col) {
+  return `${sectionId}_t${topicIdx}_${col}`;
+}
+
+function isChecked(sectionId, topicIdx, col) {
+  return !!state[getKey(sectionId, topicIdx, col)];
+}
+
+// ── Toast ──
+let toastTimer;
+function showToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+// ── Render ──
+function render() {
+  const container = document.getElementById('sections-container');
+  container.innerHTML = '';
+
+  SECTIONS.forEach((sec, si) => {
+    const block = document.createElement('div');
+    block.className = 'section-block' + (si === 0 ? ' open' : '');
+    block.id = 'block-' + sec.id;
+
+    block.innerHTML = `
+      <div class="section-header" onclick="toggleSection('${sec.id}')">
+        <div class="section-title-row">
+          <span class="section-num">${sec.num}</span>
+          <span class="section-name">${sec.name}</span>
+        </div>
+        <div class="section-meta">
+          <span class="section-progress" id="sprog-${sec.id}"></span>
+          <span class="chevron">▾</span>
+        </div>
+      </div>
+      <div class="section-body">
+        <table class="topic-table">
+          <thead>
+            <tr class="table-header-row">
+              <th>Topic</th>
+              <th class="col-clg">cmplt(~clg)</th>
+              <th class="col-me">cmplt(~me)</th>
+              <th class="col-qp">QuesPrac</th>
+              <th class="col-pyq">PYQs</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-${sec.id}"></tbody>
+        </table>
+      </div>
+    `;
+    container.appendChild(block);
+
+    const tbody = document.getElementById('tbody-' + sec.id);
+    sec.topics.forEach((topic, ti) => {
+      const row = document.createElement('tr');
+      row.className = 'topic-row';
+      row.id = `row-${sec.id}-${ti}`;
+
+      let cells = `<td><div class="topic-name-cell"><span class="topic-idx">${ti+1}</span>${topic}</div></td>`;
+      COLS.forEach((col, ci) => {
+        const checked = isChecked(sec.id, ti, col);
+        cells += `<td><button class="check-btn ${checked ? COL_CLASSES[ci] : ''}"
+          id="btn-${sec.id}-${ti}-${col}"
+          onclick="toggle('${sec.id}',${ti},'${col}',${ci},this)"
+          title="${checked ? 'Mark as pending' : 'Mark as done'}"
+          >${checked ? COL_ICONS[ci] : '○'}</button></td>`;
+      });
+      row.innerHTML = cells;
+      tbody.appendChild(row);
+      updateRowStyle(sec.id, ti);
+    });
+
+    updateSectionProgress(sec.id);
+  });
+
+  updateGlobalProgress();
+}
+
+function toggle(secId, topicIdx, col, colIdx, btn) {
+  const key = getKey(secId, topicIdx, col);
+  const nowChecked = !state[key];
+  state[key] = nowChecked;
+
+  btn.classList.toggle(COL_CLASSES[colIdx], nowChecked);
+  btn.textContent = nowChecked ? COL_ICONS[colIdx] : '○';
+  btn.title = nowChecked ? 'Mark as pending' : 'Mark as done';
+
+  btn.classList.remove('pop');
+  void btn.offsetWidth;
+  btn.classList.add('pop');
+
+  updateRowStyle(secId, topicIdx);
+  updateSectionProgress(secId);
+  updateGlobalProgress();
+  saveState();
+}
+
+function updateRowStyle(secId, topicIdx) {
+  const row = document.getElementById(`row-${secId}-${topicIdx}`);
+  if (!row) return;
+  const allDone = COLS.every(col => isChecked(secId, topicIdx, col));
+  row.classList.toggle('all-done', allDone);
+}
+
+function updateSectionProgress(secId) {
+  const sec = SECTIONS.find(s => s.id === secId);
+  const total = sec.topics.length * COLS.length;
+  let done = 0;
+  sec.topics.forEach((_, ti) => {
+    COLS.forEach(col => { if (isChecked(secId, ti, col)) done++; });
+  });
+  const pct = Math.round((done / total) * 100);
+  const el = document.getElementById('sprog-' + secId);
+  if (el) el.textContent = `${done}/${total} · ${pct}%`;
+}
+
+function updateGlobalProgress() {
+  const totalTopics = SECTIONS.reduce((s, sec) => s + sec.topics.length, 0);
+
+  COLS.forEach((col, ci) => {
+    let done = 0;
+    SECTIONS.forEach(sec => {
+      sec.topics.forEach((_, ti) => { if (isChecked(sec.id, ti, col)) done++; });
+    });
+    const pct = Math.round((done / totalTopics) * 100);
+    document.getElementById('val-' + col).textContent = pct + '%';
+    document.getElementById('bar-' + col).style.width = pct + '%';
+  });
+}
+
+function toggleSection(secId) {
+  const block = document.getElementById('block-' + secId);
+  block.classList.toggle('open');
+}
+
+async function resetAll() {
+  if (!confirm('Reset all progress? This cannot be undone.')) return;
+
+  state = {};
+
+  await setDoc(
+    doc(db, "tracker", "gate_progress"),
+    {}
+  );
+
+  render();
+}
+// Make functions visible to HTML onclick handlers
+window.toggle = toggle;
+window.toggleSection = toggleSection;
+window.resetAll = resetAll;
+// ── Init ──
+(async () => {
+  await loadState();
+  render();
+})();
+</script>
+</body>
+</html>
