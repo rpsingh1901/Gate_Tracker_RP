@@ -839,7 +839,7 @@ function render() {
 
   SECTIONS.forEach((sec, si) => {
     const block = document.createElement('div');
-    block.className = 'section-block' + (si === 0 ? ' open' : '');
+    block.className = 'section-block' ;
     block.id = 'block-' + sec.id;
 
     block.innerHTML = `
