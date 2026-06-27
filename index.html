@@ -545,9 +545,14 @@
 
     <span id="userEmail"></span>
 
-    <button id="logoutBtn" class="logout-btn">
-        🚪 Sign Out
-    </button>
+<button
+    id="logoutBtn"
+    class="logout-btn"
+    onclick="logoutUser()">
+
+    🚪 Sign Out
+
+</button>
 
 </div>
 <div class="container">
@@ -1056,22 +1061,15 @@ document
         "click",
         loginWithGoogle
     );
- window.onload = () => {
+async function logoutUser() {
 
-    document
-        .getElementById("logoutBtn")
-        .addEventListener(
-            "click",
-            async () => {
+    console.log("Logout clicked");
 
-                console.log("Logout clicked");
+    await signOut(auth);
 
-                await signOut(auth);
+}
 
-            }
-        );
-
-};
+window.logoutUser = logoutUser;
 </script>
 </body>
 </html>
