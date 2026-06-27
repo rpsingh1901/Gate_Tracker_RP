@@ -577,41 +577,6 @@
 .creator-footer a:hover{
     text-decoration:underline;
 }
-
-  .countdown-card{
-
-    margin:20px 0;
-
-    padding:20px;
-
-    background:rgba(20,20,30,0.85);
-
-    border:1px solid rgba(255,255,255,0.08);
-
-    border-radius:16px;
-
-    text-align:center;
-
-    backdrop-filter:blur(15px);
-}
-
-.countdown-title{
-
-    color:#9ca3af;
-
-    margin-bottom:10px;
-
-    font-size:1rem;
-}
-
-#countdown{
-
-    color:#a855f7;
-
-    font-size:2rem;
-
-    font-weight:700;
-}
 </style>
 </head>
 <body>
@@ -655,17 +620,6 @@
 
 </div>
 <div class="container">
-  <div class="countdown-card">
-
-    <div class="countdown-title">
-        ⏳ GATE 2027 Countdown
-    </div>
-
-    <div id="countdown">
-        Loading...
-    </div>
-
-</div>
   <header>
     <div class="header-top">
       <div class="header-left">
@@ -1192,59 +1146,7 @@ async function logoutUser() {
 
 window.logoutUser = logoutUser;
 
-function updateCountdown(){
-
-    const gateDate =
-        new Date(
-            "2027-02-06T09:30:00"
-        );
-
-    const now =
-        new Date();
-
-    const diff =
-        gateDate - now;
-
-    const days =
-        Math.floor(
-            diff /
-            (1000*60*60*24)
-        );
-
-    const hours =
-        Math.floor(
-            (diff %
-            (1000*60*60*24)) /
-            (1000*60*60)
-        );
-
-    const minutes =
-        Math.floor(
-            (diff %
-            (1000*60*60)) /
-            (1000*60)
-        );
-
-    const seconds =
-        Math.floor(
-            (diff %
-            (1000*60)) /
-            1000
-        );
-
-    document
-        .getElementById(
-            "countdown"
-        ).textContent =
-        `${days}d ${hours}h ${minutes}m ${seconds}s`;
-}
-
-updateCountdown();
-
-setInterval(
-    updateCountdown,
-    1000
-);  
+  
 </script>
  <footer class="creator-footer">
 
