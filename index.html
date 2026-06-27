@@ -424,35 +424,48 @@
     td:not(:first-child) { padding: 6px 4px; }
   }
 
-  .user-panel{
-    max-width:500px;
-    margin:20px auto;
-    padding:15px 20px;
-    background:#ffffff;
-    border-radius:16px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.1);
+.user-panel{
+    position: absolute;
+    top: 25px;
+    right: 240px;   /* adjust if needed */
 
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    background: rgba(20,20,30,0.85);
+    padding: 8px 12px;
+
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+
+    backdrop-filter: blur(10px);
 }
 
 #userEmail{
-    font-weight:600;
-    color:#374151;
-    overflow-wrap:anywhere;
+    color: #d1d5db;
+    font-size: 0.85rem;
+    font-weight: 500;
 }
 
 .logout-btn{
-    background:#ef4444;
-    color:white;
-    border:none;
-    padding:10px 18px;
-    border-radius:10px;
-    font-size:14px;
-    font-weight:600;
-    cursor:pointer;
-    transition:all 0.2s ease;
+    background: #ef4444;
+    color: white;
+
+    border: none;
+    border-radius: 8px;
+
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.logout-btn:hover{
+    transform: translateY(-1px);
+    opacity: 0.9;
 }
 
 .logout-btn:hover{
