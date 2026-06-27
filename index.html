@@ -871,16 +871,48 @@ function toggleSection(secId) {
 }
 
 async function resetAll() {
-  if (!confirm('Reset all progress? This cannot be undone.')) return;
+
+  if (
+    !confirm(
+      "Reset all progress? This cannot be undone."
+    )
+  ) return;
 
   state = {};
 
-  await setDoc(
-    doc(db, "tracker", "gate_progress"),
-    {}
-  );
+  try {
 
-  render();
+    if (currentUser) {
+
+      await setDoc(
+        doc(
+          db,
+          "users",
+          currentUser.uid,
+          "progress",
+          "gate"
+        ),
+        {}
+      );
+
+    }
+
+    render();
+
+    alert(
+      "All progress has been reset."
+    );
+
+  }
+  catch(e) {
+
+    console.error(e);
+
+    alert(
+      "Failed to reset progress."
+    );
+
+  }
 }
 // Make functions visible to HTML onclick handlers
 window.toggle = toggle;
