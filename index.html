@@ -1063,10 +1063,21 @@ document
     );
 async function logoutUser() {
 
-    console.log("Logout clicked");
+    alert("Logout button clicked");
 
-    await signOut(auth);
+    try {
 
+        await signOut(auth);
+
+        alert("Logged out");
+
+    }
+    catch(err) {
+
+        console.error(err);
+        alert(err.message);
+
+    }
 }
 
 window.logoutUser = logoutUser;
