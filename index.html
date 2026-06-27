@@ -491,7 +491,15 @@
         Continue with Google
 
     </button>
+<div id="userPanel" style="display:none; text-align:right; margin:15px;">
 
+    <span id="userEmail"></span>
+
+    <button id="logoutBtn">
+        Logout
+    </button>
+
+</div>
 </div>
 <div class="container">
   <header>
@@ -919,7 +927,7 @@ window.toggle = toggle;
 window.toggleSection = toggleSection;
 window.resetAll = resetAll;
 // ── Init ──
-// ── Init ──
+
 onAuthStateChanged(auth, async (user) => {
 
     currentUser = user;
@@ -927,20 +935,35 @@ onAuthStateChanged(auth, async (user) => {
     if (user) {
 
         await loadState();
+
         render();
 
         document.getElementById(
             "loginCard"
         ).style.display = "none";
 
+        document.getElementById(
+            "userPanel"
+        ).style.display = "block";
+
+        document.getElementById(
+            "userEmail"
+        ).textContent =
+            user.email;
+
     } else {
 
         state = {};
+
         render();
 
         document.getElementById(
             "loginCard"
         ).style.display = "block";
+
+        document.getElementById(
+            "userPanel"
+        ).style.display = "none";
 
     }
 });
@@ -983,6 +1006,16 @@ document
     .addEventListener(
         "click",
         loginWithGoogle
+    );
+  document
+    .getElementById("logoutBtn")
+    .addEventListener(
+        "click",
+        async () => {
+
+            await signOut(auth);
+
+        }
     );
 </script>
 </body>
