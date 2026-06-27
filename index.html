@@ -1056,16 +1056,22 @@ document
         "click",
         loginWithGoogle
     );
-  document
-    .getElementById("logoutBtn")
-    .addEventListener(
-        "click",
-        async () => {
-            console.log("Logout clicked");
-            await signOut(auth);
+ window.onload = () => {
 
-        }
-    );
+    document
+        .getElementById("logoutBtn")
+        .addEventListener(
+            "click",
+            async () => {
+
+                console.log("Logout clicked");
+
+                await signOut(auth);
+
+            }
+        );
+
+};
 </script>
 </body>
 </html>
