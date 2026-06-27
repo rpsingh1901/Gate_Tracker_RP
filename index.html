@@ -472,52 +472,91 @@
     transform:translateY(-2px);
     opacity:0.9;
 }
-  .login-card{
-    max-width:500px;
-    margin:20px auto;
-    padding:25px;
-    background:#ffffff;
-    border-radius:16px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.1);
-    text-align:center;
-}
+.login-card{
 
+    background: rgba(20,20,30,0.92);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    border-radius:20px;
+
+    padding:35px;
+
+    max-width:550px;
+
+    margin:40px auto;
+
+    text-align:center;
+
+    backdrop-filter:blur(20px);
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.4);
+}
 .login-card h2{
-    margin-bottom:12px;
-    color:#1f2937;
+    color:#e5e7eb;
+    margin-bottom:20px;
+    font-size:2rem;
 }
 
 .login-card p{
-    color:#555;
-    margin-bottom:15px;
+    color:#9ca3af;
+    line-height:1.6;
 }
 
 .warning{
-    background:#fff3cd;
-    color:#856404;
-    padding:12px;
-    border-radius:8px;
-    margin-bottom:18px;
-    font-size:14px;
+
+    background:rgba(255,185,0,0.12);
+
+    border:1px solid rgba(255,185,0,0.2);
+
+    color:#fbbf24;
+
+    padding:15px;
+
+    border-radius:12px;
+
+    margin:25px 0;
 }
 
 .google-btn{
-    background:#4285F4;
+
+    background:#18181b;
+
     color:white;
-    border:none;
-    padding:14px 24px;
-    border-radius:10px;
-    font-size:16px;
+
+    border:1px solid rgba(255,255,255,0.1);
+
+    border-radius:12px;
+
+    padding:16px 28px;
+
+    font-size:1rem;
+
     font-weight:600;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:12px;
+
     cursor:pointer;
+
     transition:0.2s;
 }
 
 .google-btn:hover{
-    transform:translateY(-2px);
-    opacity:0.9;
-}
 
+    transform:translateY(-2px);
+
+    border-color:#4285F4;
+
+    box-shadow:
+        0 8px 25px rgba(66,133,244,0.3);
+}
 .creator-footer{
     margin-top:50px;
     padding:20px;
@@ -543,24 +582,28 @@
 <body>
 <div id="loginCard" class="login-card">
 
-    <h2>🔒 Cloud Sync</h2>
+    <h2>☁ Save Your Progress</h2>
 
     <p>
-        Your GATE preparation progress is
-        stored securely in the cloud.
+      Save your preparation progress
+      across devices and never lose
+      your study history.
     </p>
 
     <div class="warning">
-        ⚠ Progress will not be saved
-        until you sign in.
+      ⚠ Guest progress may be lost
+      if browser data is cleared.
     </div>
 
-    <button id="googleLoginBtn" class="google-btn">
+<button id="googleLoginBtn" class="google-btn">
 
-        <span>🔵</span>
-        Continue with Google
+    <img
+        src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+        width="18">
 
-    </button>
+    Continue with Google
+
+</button>
   </div>
 <div id="userPanel" class="user-panel">
 
