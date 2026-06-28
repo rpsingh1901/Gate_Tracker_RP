@@ -2,7 +2,7 @@
   "name": "GATE CS 2027 Tracker",
   "short_name": "GATE Tracker",
   "description": "Track your GATE CS preparation",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#111827",
   "theme_color": "#7c3aed",
