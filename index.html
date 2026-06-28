@@ -577,6 +577,46 @@
 .creator-footer a:hover{
     text-decoration:underline;
 }
+.countdown-card{
+
+    margin:20px 0;
+
+    padding:20px;
+
+    background:rgba(20,20,30,0.85);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    border-radius:18px;
+
+    backdrop-filter:blur(15px);
+
+    text-align:center;
+}
+
+.countdown-title{
+
+    color:#9ca3af;
+
+    font-size:1rem;
+
+    margin-bottom:12px;
+}
+
+#countdown{
+
+    font-size:1.7rem;
+
+    font-weight:700;
+
+    color:#a855f7;
+
+    letter-spacing:1px;
+
+    text-shadow:
+    0 0 10px rgba(168,85,247,0.5),
+    0 0 20px rgba(168,85,247,0.2);
+}
 </style>
 </head>
 <body>
@@ -620,36 +660,74 @@
 
 </div>
 <div class="container">
+
   <header>
+
     <div class="header-top">
       <div class="header-left">
         <h1>GATE CS 2027<br>Syllabus Tracker</h1>
-        <p>IIT MADRAS &nbsp;·&nbsp; 10 SECTIONS &nbsp;·&nbsp; Progress auto-saved</p>
+        <p>
+          IIT MADRAS &nbsp;·&nbsp;
+          10 SECTIONS &nbsp;·&nbsp;
+          Progress auto-saved
+        </p>
       </div>
-      <button class="reset-btn" onclick="resetAll()">⚠ Reset All</button>
+
+      <button class="reset-btn" onclick="resetAll()">
+        ⚠ Reset All
+      </button>
     </div>
+
+    <!-- COUNTDOWN -->
+    <div class="countdown-card">
+
+      <div class="countdown-title">
+        🎯 Time Remaining Until GATE CS 2027
+      </div>
+
+      <div id="countdown">
+        Loading...
+      </div>
+
+    </div>
+
+    <!-- PROGRESS CARDS -->
     <div class="progress-cards">
+
       <div class="prog-card clg">
         <div class="label">cmplt(~clg)</div>
         <div class="value" id="val-clg">0%</div>
-        <div class="bar"><div class="bar-fill" id="bar-clg" style="width:0%"></div></div>
+        <div class="bar">
+          <div class="bar-fill" id="bar-clg" style="width:0%"></div>
+        </div>
       </div>
+
       <div class="prog-card me">
         <div class="label">cmplt(~me)</div>
         <div class="value" id="val-me">0%</div>
-        <div class="bar"><div class="bar-fill" id="bar-me" style="width:0%"></div></div>
+        <div class="bar">
+          <div class="bar-fill" id="bar-me" style="width:0%"></div>
+        </div>
       </div>
+
       <div class="prog-card qp">
         <div class="label">QuesPrac</div>
         <div class="value" id="val-qp">0%</div>
-        <div class="bar"><div class="bar-fill" id="bar-qp" style="width:0%"></div></div>
+        <div class="bar">
+          <div class="bar-fill" id="bar-qp" style="width:0%"></div>
+        </div>
       </div>
+
       <div class="prog-card pyq">
         <div class="label">PYQs</div>
         <div class="value" id="val-pyq">0%</div>
-        <div class="bar"><div class="bar-fill" id="bar-pyq" style="width:0%"></div></div>
+        <div class="bar">
+          <div class="bar-fill" id="bar-pyq" style="width:0%"></div>
+        </div>
       </div>
+
     </div>
+
   </header>
 
   <div class="legend">
@@ -1146,7 +1224,60 @@ async function logoutUser() {
 
 window.logoutUser = logoutUser;
 
-  
+  function updateCountdown(){
+
+    // Change this if official date changes
+    const gateDate =
+        new Date(
+            "2027-02-06T09:30:00"
+        );
+
+    const now =
+        new Date();
+
+    const diff =
+        gateDate - now;
+
+    const days =
+        Math.floor(
+            diff /
+            (1000*60*60*24)
+        );
+
+    const hours =
+        Math.floor(
+            (diff %
+            (1000*60*60*24)) /
+            (1000*60*60)
+        );
+
+    const minutes =
+        Math.floor(
+            (diff %
+            (1000*60*60)) /
+            (1000*60)
+        );
+
+    const seconds =
+        Math.floor(
+            (diff %
+            (1000*60)) /
+            1000
+        );
+
+    document
+        .getElementById(
+            "countdown"
+        ).textContent =
+        `${days} Days • ${hours} Hrs • ${minutes} Min • ${seconds} Sec`;
+}
+
+updateCountdown();
+
+setInterval(
+    updateCountdown,
+    1000
+);
 </script>
  <footer class="creator-footer">
 
