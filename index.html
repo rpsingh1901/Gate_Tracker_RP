@@ -1082,28 +1082,24 @@
   <!-- BADGES PANEL -->
   <div class="badges-panel">
 
-    <div class="badges-title">
-      🏅 Achievements
+    <div class="badge locked" id="badge1">
+      🌱 First Step<br>🔒
     </div>
 
-    <div class="badge unlocked">
-      🌱 First Step
+    <div class="badge locked" id="badge2">
+      🔥 25% Complete<br>🔒
     </div>
 
-    <div class="badge locked">
-      🔥 25% Complete
+    <div class="badge locked" id="badge3">
+      ⚡ Half Syllabus<br>🔒
     </div>
 
-    <div class="badge locked">
-      ⚡ Half Syllabus
+    <div class="badge locked" id="badge4">
+      🚀 AIR Hunter<br>🔒
     </div>
 
-    <div class="badge locked">
-      🚀 AIR Hunter
-    </div>
-
-    <div class="badge locked">
-      👑 GATE Legend
+    <div class="badge locked" id="badge5">
+      👑 GATE Legend<br>🔒
     </div>
 
   </div>
@@ -1510,23 +1506,40 @@
         "xp-fill"
       ).style.height = percent + "%";
 
-      const badges =
-        document.querySelectorAll(".badge");
 
+      // BADGES SECTION
       if (percent >= 1)
-        badges[0].className = "badge unlocked";
+        unlockBadge("badge1", "First Step");
 
       if (percent >= 25)
-        badges[1].className = "badge unlocked";
+        unlockBadge("badge2", "25% Complete");
 
       if (percent >= 50)
-        badges[2].className = "badge unlocked";
+        unlockBadge("badge3", "Half Syllabus");
 
       if (percent >= 80)
-        badges[3].className = "badge unlocked";
+        unlockBadge("badge4", "AIR Hunter");
 
-      if (percent == 100)
-        badges[4].className = "badge unlocked";
+      if (percent >= 100)
+        unlockBadge("badge5", "GATE Legend");
+    }
+
+    function unlockBadge(id, text) {
+
+      const badge =
+        document.getElementById(id);
+
+      if (
+        badge.classList.contains("locked")
+      ) {
+
+        badge.classList.remove("locked");
+
+        badge.classList.add("unlocked");
+
+        badge.innerHTML =
+          "✅ " + text;
+      }
     }
 
     function toggleSection(secId) {
