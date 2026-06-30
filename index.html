@@ -850,7 +850,7 @@
       position: fixed;
 
       left: 25px;
-      top: 120px;
+      top: 220px;
 
       width: 160px;
 
@@ -1526,24 +1526,24 @@
 
     function unlockBadge(id, text) {
 
-  const badge =
-    document.getElementById(id);
+      const badge =
+        document.getElementById(id);
 
-  if (
-    badge.classList.contains("locked")
-  ) {
+      if (
+        badge.classList.contains("locked")
+      ) {
 
-    badge.classList.remove("locked");
+        badge.classList.remove("locked");
 
-    badge.classList.add("unlocked");
+        badge.classList.add("unlocked");
 
-    badge.innerHTML =
-      badge.innerHTML.replace(
-        "🔒",
-        "✅"
-      );
-  }
-}
+        badge.innerHTML =
+          badge.innerHTML.replace(
+            "🔒",
+            "✅"
+          );
+      }
+    }
 
     function toggleSection(secId) {
       const block = document.getElementById('block-' + secId);
