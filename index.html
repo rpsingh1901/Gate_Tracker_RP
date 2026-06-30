@@ -1526,21 +1526,24 @@
 
     function unlockBadge(id, text) {
 
-      const badge =
-        document.getElementById(id);
+  const badge =
+    document.getElementById(id);
 
-      if (
-        badge.classList.contains("locked")
-      ) {
+  if (
+    badge.classList.contains("locked")
+  ) {
 
-        badge.classList.remove("locked");
+    badge.classList.remove("locked");
 
-        badge.classList.add("unlocked");
+    badge.classList.add("unlocked");
 
-        badge.innerHTML =
-          "✅ " + text;
-      }
-    }
+    badge.innerHTML =
+      badge.innerHTML.replace(
+        "🔒",
+        "✅"
+      );
+  }
+}
 
     function toggleSection(secId) {
       const block = document.getElementById('block-' + secId);
