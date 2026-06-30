@@ -765,28 +765,28 @@
       margin-bottom: 15px;
     }
 
-    .vertical-xp-container{
-    position: fixed;
-    right: 20px;
-    top: 220px;
+    .vertical-xp-container {
+      position: fixed;
+      right: 20px;
+      top: 220px;
 
-    width: 90px;
-    height: 520px;
+      width: 90px;
+      height: 520px;
 
-    background: #111827;
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 18px;
+      background: #111827;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
-    padding: 18px 10px;
+      padding: 18px 10px;
 
-    z-index: 999;
+      z-index: 999;
 
-    box-shadow: 0 0 20px rgba(0,0,0,.3);
-}
+      box-shadow: 0 0 20px rgba(0, 0, 0, .3);
+    }
 
     .vertical-xp-bar {
       width: 18px;
@@ -816,34 +816,92 @@
       margin-top: 15px;
       font-size: 14px;
     }
-    .rank-title{
-    font-size: 14px;
-    text-align: center;
-    color: #e5e7eb;
-    margin-bottom: 18px;
-    line-height: 1.4;
-}
 
-.rank-icon{
-    font-size: 28px;
-    margin-bottom: 6px;
-}
+    .rank-title {
+      font-size: 14px;
+      text-align: center;
+      color: #e5e7eb;
+      margin-bottom: 18px;
+      line-height: 1.4;
+    }
 
-.level-name{
-    font-size: 18px;
-    color: #a855f7;
-    font-weight: 600;
-    text-align: center;
+    .rank-icon {
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
 
-    margin-bottom: 15px;
-}
+    .level-name {
+      font-size: 18px;
+      color: #a855f7;
+      font-weight: 600;
+      text-align: center;
 
-.xp-text{
-    font-size: 14px;
-    color: white;
-    margin-bottom: 20px;
-    font-weight: 600;
-}
+      margin-bottom: 15px;
+    }
+
+    .xp-text {
+      font-size: 14px;
+      color: white;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .badges-panel {
+      position: fixed;
+
+      left: 25px;
+      top: 120px;
+
+      width: 160px;
+
+      background: #111827;
+
+      border: 1px solid rgba(255, 255, 255, .1);
+
+      border-radius: 18px;
+
+      padding: 18px;
+
+      z-index: 999;
+    }
+
+    .badges-title {
+      font-size: 18px;
+      font-weight: 700;
+
+      margin-bottom: 20px;
+
+      text-align: center;
+    }
+
+    .badge {
+      padding: 10px;
+      margin-bottom: 12px;
+
+      border-radius: 12px;
+
+      text-align: center;
+
+      font-size: 14px;
+
+      transition: .3s;
+    }
+
+    .badge.unlocked {
+      background: rgba(168, 85, 247, .15);
+
+      border: 1px solid #a855f7;
+
+      color: #ffffff;
+    }
+
+    .badge.locked {
+      background: #1f2937;
+
+      border: 1px solid #374151;
+
+      color: #6b7280;
+    }
   </style>
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX">
@@ -940,28 +998,28 @@
       <!-- LEVEL SYSTEM -->
       <div class="vertical-xp-container">
 
-    <div class="rank-title">
-        🏆<br>Your<br>
-        GATE Rank
-    </div>
+        <div class="rank-title">
+          🏆<br>Your<br>
+          GATE Rank
+        </div>
 
-    <div class="rank-icon">
-        
-    </div>
+        <div class="rank-icon">
 
-    <div id="level-name" class="level-name">
-        Beginner
-    </div>
+        </div>
 
-    <div id="xp-text" class="xp-text">
-        50 XP
-    </div>
+        <div id="level-name" class="level-name">
+          Beginner
+        </div>
 
-    <div class="vertical-xp-bar">
-        <div id="xp-fill" class="vertical-xp-fill"></div>
-    </div>
+        <div id="xp-text" class="xp-text">
+          50 XP
+        </div>
 
-</div>
+        <div class="vertical-xp-bar">
+          <div id="xp-fill" class="vertical-xp-fill"></div>
+        </div>
+
+      </div>
 
       <!-- PROGRESS CARDS -->
       <div class="progress-cards">
@@ -1021,6 +1079,34 @@
   </div>
 
   <div class="toast" id="toast">✓ Progress saved</div>
+  <!-- BADGES PANEL -->
+  <div class="badges-panel">
+
+    <div class="badges-title">
+      🏅 Achievements
+    </div>
+
+    <div class="badge unlocked">
+      🌱 First Step
+    </div>
+
+    <div class="badge locked">
+      🔥 25% Complete
+    </div>
+
+    <div class="badge locked">
+      ⚡ Half Syllabus
+    </div>
+
+    <div class="badge locked">
+      🚀 AIR Hunter
+    </div>
+
+    <div class="badge locked">
+      👑 GATE Legend
+    </div>
+
+  </div>
 
   <script type="module">
     import { initializeApp } from
@@ -1423,6 +1509,24 @@
       document.getElementById(
         "xp-fill"
       ).style.height = percent + "%";
+
+      const badges =
+        document.querySelectorAll(".badge");
+
+      if (percent >= 1)
+        badges[0].className = "badge unlocked";
+
+      if (percent >= 25)
+        badges[1].className = "badge unlocked";
+
+      if (percent >= 50)
+        badges[2].className = "badge unlocked";
+
+      if (percent >= 80)
+        badges[3].className = "badge unlocked";
+
+      if (percent == 100)
+        badges[4].className = "badge unlocked";
     }
 
     function toggleSection(secId) {
