@@ -765,26 +765,28 @@
       margin-bottom: 15px;
     }
 
-    .vertical-xp-container {
-      position: fixed;
-      right: 20px;
-      top: 220px;
+    .vertical-xp-container{
+    position: fixed;
+    right: 20px;
+    top: 220px;
 
-      width: 80px;
-      height: 450px;
+    width: 90px;
+    height: 520px;
 
-      background: #111827;
-      border: 1px solid rgba(255, 255, 255, .1);
-      border-radius: 20px;
+    background: #111827;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 18px;
 
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-      padding: 20px;
-      z-index: 999;
-    }
+    padding: 18px 10px;
+
+    z-index: 999;
+
+    box-shadow: 0 0 20px rgba(0,0,0,.3);
+}
 
     .vertical-xp-bar {
       width: 18px;
@@ -814,6 +816,34 @@
       margin-top: 15px;
       font-size: 14px;
     }
+    .rank-title{
+    font-size: 14px;
+    text-align: center;
+    color: #e5e7eb;
+    margin-bottom: 18px;
+    line-height: 1.4;
+}
+
+.rank-icon{
+    font-size: 28px;
+    margin-bottom: 6px;
+}
+
+.level-name{
+    font-size: 18px;
+    color: #a855f7;
+    font-weight: 600;
+    text-align: center;
+
+    margin-bottom: 15px;
+}
+
+.xp-text{
+    font-size: 14px;
+    color: white;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
   </style>
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX">
@@ -908,27 +938,30 @@
 
       </div>
       <!-- LEVEL SYSTEM -->
-      <div class="level-card">
-        <div class="level-title">
-          🏆 Your GATE Rank
-        </div>
+      <div class="vertical-xp-container">
 
-        <div id="level-name" class="level-name">
-          🌱 Beginner
-        </div>
+    <div class="rank-title">
+        🏆<br>Your<br>
+        GATE Rank
+    </div>
 
-        <div class="vertical-xp-container">
+    <div class="rank-icon">
+        
+    </div>
 
-          <div class="vertical-xp-bar">
-            <div id="xp-fill" class="vertical-xp-fill"></div>
-          </div>
+    <div id="level-name" class="level-name">
+        Beginner
+    </div>
 
-          <div id="xp-text" class="xp-text">
-            0 XP
-          </div>
+    <div id="xp-text" class="xp-text">
+        50 XP
+    </div>
 
-        </div>
-      </div>
+    <div class="vertical-xp-bar">
+        <div id="xp-fill" class="vertical-xp-fill"></div>
+    </div>
+
+</div>
 
       <!-- PROGRESS CARDS -->
       <div class="progress-cards">
