@@ -151,6 +151,9 @@ const SECTIONS = [
 
 // ── State ──
 let state = {};
+let currentStreak = 0;
+let bestStreak = 0;
+let lastStudyDate = null;
 
 async function loadState() {
 
@@ -308,6 +311,7 @@ function toggle(secId, topicIdx, col, colIdx, btn) {
   updateRowStyle(secId, topicIdx);
   updateSectionProgress(secId);
   updateGlobalProgress();
+  updateStreak();
   saveState();
 }
 
@@ -639,6 +643,58 @@ function updateCountdown() {
       "countdown"
     ).textContent =
     `${days} Days • ${hours} Hrs • ${minutes} Min • ${seconds} Sec`;
+}
+
+function updateStreak() {
+
+    const today =
+        new Date().toDateString();
+
+    if (lastStudyDate === today)
+        return;
+
+    const yesterday =
+        new Date();
+
+    yesterday.setDate(
+        yesterday.getDate() - 1
+    );
+
+    if (
+        lastStudyDate ===
+        yesterday.toDateString()
+    ) {
+
+        currentStreak++;
+
+    } else {
+
+        currentStreak = 1;
+    }
+
+    lastStudyDate = today;
+
+    if (
+        currentStreak > bestStreak
+    ) {
+        bestStreak =
+            currentStreak;
+    }
+
+    document.getElementById(
+        "current-streak"
+    ).innerText =
+        "Day " + currentStreak;
+
+    document.getElementById(
+        "best-streak"
+    ).innerText =
+        bestStreak;
+
+    document.getElementById(
+        "streak-status"
+    ).innerText =
+        "🔥 Keep going!";
 }
 
 updateCountdown();
